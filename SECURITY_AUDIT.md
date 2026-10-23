@@ -82,3 +82,20 @@ Der Payload wurde vom Frontend-Rendering (Django Templates) nicht als ausführba
 
 **Fazit:**
 Die Anwendung ist standardmäßig effektiv gegen grundlegende Reflected- und Stored-XSS-Angriffe geschützt (Secure Defaults). Zusätzliche manuelle Sanitization-Bibliotheken (wie Bleach) sind für Standard-Textfelder nicht zwingend erforderlich.
+
+---
+
+## 6. Secret Management & API Security (CWE-798: Use of Hard-coded Credentials)
+
+Im Rahmen der Code-Überprüfung wurde der Umgang mit externen Dienstleistern und deren Zugangsdaten analysiert.
+
+**Identifizierte Schwachstelle:**
+Ein sensibler API-Schlüssel für den DeepL-Übersetzungsdienst (`DEEPL_API_KEY`) befand sich direkt im Quellcode (`main/translate_product.py`). Dies stellte ein Risiko für ein versehentliches Credential Leakage über das Versionskontrollsystem (GitHub) dar.
+
+**Durchgeführte Maßnahme (Remediation):**
+* Der API-Schlüssel wurde vollständig aus der Codebasis entfernt.
+* Die Speicherung erfolgt nun isoliert in den Umgebungsvariablen (`.env`), welche durch die `.gitignore` strikt von der Versionskontrolle ausgeschlossen sind.
+* Der Applikationscode wurde refaktorisiert, um den Schlüssel zur Laufzeit sicher über `os.environ.get('DEEPL_API_KEY')` abzurufen.
+
+**Fazit:**
+Die Anwendung folgt dem Prinzip der Trennung von Code und Konfiguration. Hardcoded Secrets sind architektonisch ausgeschlossen und die Integration von Drittanbieter-APIs erfolgt nach aktuellen Sicherheitsstandards.
