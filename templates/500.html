@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Server Error - 500" %}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-16 sm:py-24 max-w-[1600px] flex items-center justify-center min-h-[60vh]">
+    <div class="text-center max-w-lg flex flex-col items-center">
+        <!-- Номер ошибки -->
+        <h1 class="text-7xl sm:text-9xl font-extrabold text-gray-300 mb-4 tracking-tighter drop-shadow-sm">500</h1>
+        
+        <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">
+            {% trans "Internal Server Error" %}
+        </h2>
+        
+        <p class="text-base sm:text-lg text-gray-500 mb-8">
+            {% trans "Something went wrong on our end. Our team has been notified and we are working to fix the issue. Please try again in a few minutes." %}
+        </p>
+        
+        <!-- Кнопки действий -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            <a href="/" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gray-900 text-white rounded-xl text-sm font-bold tracking-wide hover:bg-orange-500 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                {% trans "Go to Home" %}
+            </a>
+            
+            <button onclick="window.location.reload()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white border border-gray-200 text-gray-800 rounded-xl text-sm font-bold tracking-wide hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all duration-300 focus:outline-none">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                {% trans "Refresh Page" %}
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
