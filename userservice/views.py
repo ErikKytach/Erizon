@@ -34,11 +34,11 @@ def login_func(request):
     if request.user.is_authenticated:
         return redirect("/")
     if request.method == "POST":
-        form = UserLoginForm(data = request.POST)
+        form = UserLoginForm(request, data = request.POST)
         if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
-            user = authenticate(username = username, password = password)
+            user = authenticate(request, username = username, password = password)
             if user != None:
                 request.session["user_id"] = user.id
                 login(request, user)
