@@ -34,3 +34,19 @@ Zur proaktiven Identifizierung potenzieller Sicherheitslücken im Python-Quellco
 **Ergebnis:**
 * **Befund:** `No issues identified.` Es wurden 0 kritische (High), 0 mittlere (Medium) und 0 geringe (Low) Schwachstellen gefunden.
 * **Fazit:** Die Kernlogik der Django-Anwendung entspricht den gängigen Secure-Coding-Standards für Python.
+
+---
+
+## 3. Manuelles Penetration Testing & Access Control (OWASP A01:2021)
+
+Um die Robustheit der Geschäftslogik zu validieren, wurde ein manueller Penetration Test mit Fokus auf **Insecure Direct Object References (IDOR)** durchgeführt.
+
+**Testszenario:**
+Es wurde geprüft, ob ein authentifizierter Benutzer (`hacker`) durch Manipulation von URL-Parametern (z.B. `/edit_product/337/`) auf die Ressourcen eines anderen Benutzers (`victim`) zugreifen oder diese verändern kann.
+
+**Ergebnis der Prüfung:**
+* **Warenkorb & Bestellhistorie:** Die Endpunkte (`/info_cart/`, `/all_orders/`) verzichten vollständig auf ID-Parameter in der URL und nutzen stattdessen serverseitiges Session-Management (`request.user`), wodurch IDOR-Angriffe architektonisch ausgeschlossen sind.
+* **Produktverwaltung:** Der direkte Aufruf einer fremden Produkt-ID (`/edit_product/<id>/`) durch einen unberechtigten Benutzer wurde vom Backend erfolgreich abgefangen. Die Autorisierungsprüfung im View greift korrekt, verweigert den Zugriff und leitet den Angreifer auf das eigene Dashboard um.
+
+**Fazit:**
+Die Access-Control-Mechanismen sind sicher implementiert (Security by Design). Es konnten keine Privilegien-Eskalationen oder unautorisierten Datenzugriffe festgestellt werden.
