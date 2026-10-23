@@ -1,15 +1,15 @@
 # Security Audit & Hardening Report: Erizon E-Commerce Platform
 
-**Autor:** Erik Kytach
-**Projekt:** Erizon (Full-Stack Django E-Commerce)
-**Ziel:** Überprüfung der Anwendung auf Schwachstellen nach OWASP Top 10 und Implementierung von Hardening-Maßnahmen für den Produktivbetrieb.
-**Umgebung:** Isolierte Staging-Umgebung / Code-Analyse (White-Box).
+* **Autor:** Erik Kytach
+* **Projekt:** Erizon (Full-Stack Django E-Commerce)
+* **Ziel:** Überprüfung der Anwendung auf Schwachstellen nach OWASP Top 10 und Implementierung von Hardening-Maßnahmen für den Produktivbetrieb.
+* **Umgebung:** Isolierte Staging-Umgebung / Code-Analyse (White-Box).
 
 ---
 
 ## 1. Konfigurations- und Transport-Sicherheit (OWASP A05:2021)
 
-Im Rahmen des Audits wurde die Produktionskonfiguration der Django-Anwendung mittels automatisierter Sicherheitsprüfungen (`manage.py check --deploy`) analysiert. Dabei wurden potenzielle Angriffsvektoren identifiziert und durch gezieltes System-Hardening geschlossen:
+Die Produktionskonfiguration der Anwendung wurde durch den Befehl `manage.py check --deploy` auf Sicherheitslücken geprüft. Dabei wurden potenzielle Angriffsvektoren identifiziert und durch gezieltes System-Hardening geschlossen:
 
 | ID | Identifizierte Schwachstelle | Risiko / Angriffsvektor | Durchgeführte Maßnahme (Remediation) |
 | :--- | :--- | :--- | :--- |
