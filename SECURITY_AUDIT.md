@@ -50,3 +50,20 @@ Es wurde geprüft, ob ein authentifizierter Benutzer (`hacker`) durch Manipulati
 
 **Fazit:**
 Die Access-Control-Mechanismen sind sicher implementiert (Security by Design). Es konnten keine Privilegien-Eskalationen oder unautorisierten Datenzugriffe festgestellt werden.
+
+---
+
+## 4. Rate Limiting & Brute-Force Protection (OWASP A07:2021)
+
+Zur Absicherung der Authentifizierungsschnittstellen gegen automatisierte Credential-Stuffing- und Brute-Force-Angriffe wurde ein dynamisches Rate Limiting implementiert.
+
+**Testdurchführung:**
+Ein automatisiertes Python-Skript führte massenhafte POST-Requests mit iterierten Passwörtern gegen den Endpunkt `/de/login/` aus. Ohne Schutzmechanismen konnten unbegrenzt Anmeldeversuche durchgeführt werden.
+
+**Durchgeführte Maßnahme (Remediation):**
+* Integration der Bibliothek `django-axes` zur Überwachung von Login-Versuchen auf Middleware-Ebene.
+* Konfiguration eines strikten Lockouts (`AXES_FAILURE_LIMIT = 3`).
+* Die Blockierung erfolgt dynamisch (`AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]`), um sowohl Account-Targeting als auch IP-basierte Angriffe zu unterbinden.
+
+**Ergebnis nach Remediation:**
+Nach drei fehlerhaften Versuchen wird die Quell-IP für weitere Authentifizierungsversuche blockiert. Der Penetration Test des Skripts scheiterte im Re-Test; der Angriffsvektor wurde erfolgreich geschlossen.
