@@ -60,7 +60,7 @@ Zur Absicherung der Authentifizierungsschnittstellen gegen automatisierte Creden
 **Testdurchführung:**
 Ein automatisiertes Python-Skript führte massenhafte POST-Requests mit iterierten Passwörtern gegen den Endpunkt `/de/login/` aus. Ohne Schutzmechanismen konnten unbegrenzt Anmeldeversuche durchgeführt werden.
 
-**Durchgeführte Maßnahme (Remediation):**
+**Durchgeführte Maßnahme:**
 * Integration der Bibliothek `django-axes` zur Überwachung von Login-Versuchen auf Middleware-Ebene.
 * Konfiguration eines strikten Lockouts (`AXES_FAILURE_LIMIT = 3`).
 * Die Blockierung erfolgt dynamisch (`AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]`), um sowohl Account-Targeting als auch IP-basierte Angriffe zu unterbinden.
