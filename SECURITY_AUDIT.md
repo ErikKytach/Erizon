@@ -41,7 +41,7 @@ Zur proaktiven Identifizierung potenzieller Sicherheitslücken im Python-Quellco
 
 Um die Robustheit der Geschäftslogik zu validieren, wurde ein manueller Penetration Test mit Fokus auf **Insecure Direct Object References (IDOR)** durchgeführt.
 
-**Testszenario:**
+**Testdurchführung:**
 Es wurde geprüft, ob ein authentifizierter Benutzer (`hacker`) durch Manipulation von URL-Parametern (z.B. `/edit_product/337/`) auf die Ressourcen eines anderen Benutzers (`victim`) zugreifen oder diese verändern kann.
 
 **Ergebnis der Prüfung:**
@@ -67,3 +67,18 @@ Ein automatisiertes Python-Skript führte massenhafte POST-Requests mit iteriert
 
 **Ergebnis nach Remediation:**
 Nach drei fehlerhaften Versuchen wird die Quell-IP für weitere Authentifizierungsversuche blockiert. Der Penetration Test des Skripts scheiterte im Re-Test; der Angriffsvektor wurde erfolgreich geschlossen.
+
+---
+
+## 5. Cross-Site Scripting (XSS) Prevention (OWASP A03:2021)
+
+Um die Widerstandsfähigkeit gegen clientseitige Angriffe zu evaluieren, wurde ein Stored-XSS-Penetrationstest durchgeführt.
+
+**Testdurchführung:**
+Es wurde versucht, einen bösartigen JavaScript-Payload (`<script>alert("XSS");</script>`) in die Datenbank zu injizieren, indem dieser als Produktbeschreibung in der Eingabemaske (`/add_product/`) übermittelt wurde. Ziel war es, den Code bei der Anzeige des Produkts für andere Nutzer im Browser auszuführen.
+
+**Ergebnis der Prüfung:**
+Der Payload wurde vom Frontend-Rendering (Django Templates) nicht als ausführbarer Code interpretiert. Die integrierte Auto-Escaping-Funktion des Frameworks wandelte die potenziell gefährlichen HTML-Tags erfolgreich in sichere Textentitäten (z. B. `&lt;` und `&gt;`) um. Der Payload wurde den Endbenutzern lediglich als harmloser Plain-Text gerendert.
+
+**Fazit:**
+Die Anwendung ist standardmäßig effektiv gegen grundlegende Reflected- und Stored-XSS-Angriffe geschützt (Secure Defaults). Zusätzliche manuelle Sanitization-Bibliotheken (wie Bleach) sind für Standard-Textfelder nicht zwingend erforderlich.
