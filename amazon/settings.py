@@ -158,8 +158,8 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-    
-    
+
+
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -167,4 +167,4 @@ AUTHENTICATION_BACKENDS = [
 
 AXES_FAILURE_LIMIT = 3  # Блокировать после 3 неверных попыток
 AXES_COOLOFF_TIME = 1   # Время блокировки (в часах)
-AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
+AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]
