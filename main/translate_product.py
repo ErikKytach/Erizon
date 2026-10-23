@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import deepl
 
-DEEPL_API_KEY="61079151-f6af-4e24-8142-d5cd79d821fe:fx"
+DEEPL_API_KEY = os.environ.get('DEEPL_API_KEY')
 translator_deepl = deepl.Translator(DEEPL_API_KEY)
 
 def translate_via_deepl(title: str, description: str, source_lang: str = "auto", target_lang: str = "en-us") -> str:
