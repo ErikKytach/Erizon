@@ -2,7 +2,7 @@
 
 Ein moderner, mehrsprachiger Customer-to-Customer (C2C) Marktplatz, entwickelt mit Python und dem Django-Framework. Erizon kombiniert die Kernfunktionen klassischer E-Commerce-Shops (wie Amazon) mit der Flexibilität von Kleinanzeigen-Plattformen (wie eBay Kleinanzeigen). Nutzer können sowohl eigene Artikel verkaufen als auch Produkte anderer Nutzer kaufen.
 
-🚀 **Live-Demo:** [erikkytach.pythonanywhere.com](https://erikkytach.pythonanywhere.com/)
+### **Live-Demo:** [erikkytach.pythonanywhere.com](https://erikkytach.pythonanywhere.com/)
 
 ---
 
