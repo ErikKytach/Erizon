@@ -2,19 +2,23 @@
 
 Ein moderner, mehrsprachiger Customer-to-Customer (C2C) Marktplatz, entwickelt mit Python und dem Django-Framework. Erizon kombiniert die Kernfunktionen klassischer E-Commerce-Shops (wie Amazon) mit der Flexibilität von Kleinanzeigen-Plattformen (wie eBay Kleinanzeigen). Nutzer können sowohl eigene Artikel verkaufen als auch Produkte anderer Nutzer kaufen.
 
+🚀 **Live-Demo:** [erikkytach.pythonanywhere.com](https://erikkytach.pythonanywhere.com/)
+
+---
+
 ## 👀 Projektübersicht
 
 Dieses Projekt wurde als umfassendes Portfolio-Projekt entwickelt, um tiefgreifende Kenntnisse in der Backend-Entwicklung, relationalem Datenbankdesign, API-Integration und Web-Security zu demonstrieren. 
 
-**Live-Demo (Hosting):** Bereitgestellt auf PythonAnywhere Infrastructure.
+**Live-Demo (Hosting):** Bereitgestellt auf PythonAnywhere Infrastructure — 👉 [Zum Projekt](https://erikkytach.pythonanywhere.com/)
 
 ## 🛠 Technologie-Stack
 
-* **Backend:** Python 3, Django 5.x
-* **Datenbank:** SQLite3 (ausgelegt für Rapid Prototyping)
-* **Frontend:** HTML5, CSS (Tailwind CSS integriert), JavaScript
-* **APIs & externe Services:** DeepL API (für dynamische Mehrsprachigkeit)
-* **Sicherheit:** `django-axes` (Brute-Force Protection), integrierte Django-Security-Middleware (CSRF, XSS-Schutz). *Details siehe [SECURITY_AUDIT.md](./SECURITY_AUDIT.md)*.
+- **Backend:** Python 3, Django 5.x
+- **Datenbank:** SQLite3 (ausgelegt für Rapid Prototyping)
+- **Frontend:** HTML5, CSS (Tailwind CSS integriert), JavaScript
+- **APIs & externe Services:** DeepL API (für dynamische Mehrsprachigkeit)
+- **Sicherheit:** `django-axes` (Brute-Force Protection), integrierte Django-Security-Middleware (CSRF, XSS-Schutz). *Details siehe [SECURITY_AUDIT.md](./SECURITY_AUDIT.md)*.
 
 ## 🛒 Hauptfunktionen (Features)
 
@@ -28,11 +32,11 @@ Dieses Projekt wurde als umfassendes Portfolio-Projekt entwickelt, um tiefgreife
 
 Das relationale Datenbankschema ist strikt normalisiert und umfasst unter anderem folgende Kernmodelle:
 
-* **`User` (Custom):** Erweitert den Standard-AbstractUser um spezifische Felder (z.B. Telefonnummer).
-* **`Product` & `ProductImage`:** Speichert Produktdaten, Metadaten (Views, Sold-Count) und Fremdschlüssel zu `Manufacturer` und `Category`. Unterstützt eine One-to-Many-Beziehung für eine unbegrenzte Bildergalerie pro Artikel.
-* **`Cart` & `CartItem`:** Verknüpft den User mit seinen ausgewählten Produkten. Erhöht/Reduziert Stückzahlen dynamisch.
-* **`PaymentMethod`:** Speichert Zahlungspräferenzen (Kreditkarte, PayPal, Bar) des Nutzers isoliert von der konkreten Bestellung.
-* **`Order` & `OrderItem`:** Friert den Zustand eines Kaufs ein (`price_at_purchase`, `product_title`), sodass historische Bestellungen intakt bleiben, selbst wenn das ursprüngliche Produkt später gelöscht oder im Preis geändert wird.
+- **`User` (Custom):** Erweitert den Standard-AbstractUser um spezifische Felder (z.B. Telefonnummer).
+- **`Product` & `ProductImage`:** Speichert Produktdaten, Metadaten (Views, Sold-Count) und Fremdschlüssel zu `Manufacturer` und `Category`. Unterstützt eine One-to-Many-Beziehung für eine unbegrenzte Bildergalerie pro Artikel.
+- **`Cart` & `CartItem`:** Verknüpft den User mit seinen ausgewählten Produkten. Erhöht/Reduziert Stückzahlen dynamisch.
+- **`PaymentMethod`:** Speichert Zahlungspräferenzen (Kreditkarte, PayPal, Bar) des Nutzers isoliert von der konkreten Bestellung.
+- **`Order` & `OrderItem`:** Friert den Zustand eines Kaufs ein (`price_at_purchase`, `product_title`), sodass historische Bestellungen intakt bleiben, selbst wenn das ursprüngliche Produkt später gelöscht oder im Preis geändert wird.
 
 ## 🔒 Security & Hardening
 
