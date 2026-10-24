@@ -94,7 +94,7 @@ Ein sensibler API-Schlüssel für den DeepL-Übersetzungsdienst (`DEEPL_API_KEY`
 
 **Durchgeführte Maßnahme:**
 * Der API-Schlüssel wurde vollständig aus der Codebasis entfernt.
-* Die Speicherung erfolgt nun isoliert in den Umgebungsvariablen (`.env`), welche durch die `.gitignore` strikt von der Versionskontrolle ausgeschlossen sind.
+* Die Speicherung erfolgt isoliert in den Umgebungsvariablen (`.env`), welche durch die `.gitignore` strikt von der Versionskontrolle ausgeschlossen sind.
 * Der Applikationscode wurde refaktorisiert, um den Schlüssel zur Laufzeit sicher über `os.environ.get('DEEPL_API_KEY')` abzurufen.
 
 **Fazit:**
