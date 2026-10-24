@@ -92,10 +92,25 @@ Im Rahmen der Code-Überprüfung wurde der Umgang mit externen Dienstleistern un
 **Identifizierte Schwachstelle:**
 Ein sensibler API-Schlüssel für den DeepL-Übersetzungsdienst (`DEEPL_API_KEY`) befand sich direkt im Quellcode (`main/translate_product.py`). Dies stellte ein Risiko für ein versehentliches Credential Leakage über das Versionskontrollsystem (GitHub) dar.
 
-**Durchgeführte Maßnahme (Remediation):**
+**Durchgeführte Maßnahme:**
 * Der API-Schlüssel wurde vollständig aus der Codebasis entfernt.
 * Die Speicherung erfolgt nun isoliert in den Umgebungsvariablen (`.env`), welche durch die `.gitignore` strikt von der Versionskontrolle ausgeschlossen sind.
 * Der Applikationscode wurde refaktorisiert, um den Schlüssel zur Laufzeit sicher über `os.environ.get('DEEPL_API_KEY')` abzurufen.
 
 **Fazit:**
 Die Anwendung folgt dem Prinzip der Trennung von Code und Konfiguration. Hardcoded Secrets sind architektonisch ausgeschlossen und die Integration von Drittanbieter-APIs erfolgt nach aktuellen Sicherheitsstandards.
+
+---
+
+## 7. Business Logic & Parameter Tampering (OWASP A04:2021)
+
+Zur Überprüfung der Geschäftslogik auf logische Schwachstellen wurde ein Parameter-Tampering-Angriff mithilfe des Intercepting-Proxys **Burp Suite** simuliert.
+
+**Testdurchführung:**
+Ziel war es, den HTTP-POST-Request beim Hinzufügen eines Artikels in den Warenkorb (`/add_to_cart/<id>/`) abzufangen und den Preis-Parameter clientseitig zu manipulieren (z. B. Reduzierung des Preises auf 1 €).
+
+**Ergebnis der Prüfung:**
+Die Analyse des abgefangenen Requests ergab, dass die Anwendung clientseitige Preis- oder Mengenangaben vollständig ignoriert bzw. gar nicht erst überträgt. Die einzige übermittelte Information im Request-Body ist das obligatorische `csrfmiddlewaretoken`. 
+
+**Fazit:**
+Die Anwendung ist **Secure by Design**. Das Backend vertraut keinen clientseitigen Eingaben bezüglich kritischer Geschäftsdaten (wie Preisen). Stattdessen wird die Artikel-ID aus der URL verwendet, um die autoritativen Preisinformationen serverseitig und manipulationssicher direkt aus der Datenbank abzufragen. Ein Price-Tampering-Angriff ist somit architektonisch unmöglich.
