@@ -14,16 +14,12 @@ def registration_func(request):
         if form.is_valid() and "admin" not in form.cleaned_data["username"].lower():
             user = form.save()
 
-            # Добавлен аргумент backend
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
             request.session["user_id"] = user.id
             from main.views import create_cart_func
             create_cart_func(request)
             return redirect('/all_products/')
-        # Убрано: else: return redirect("/registration/")
-        # (Читайте совет ниже)
-
     else:
         form = UserRegistrationForm()
 
