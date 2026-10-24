@@ -36,6 +36,7 @@ Zur proaktiven Identifizierung potenzieller Sicherheitslücken im Python-Quellco
 - **Fazit:** Die Kernlogik der Django-Anwendung entspricht den gängigen Secure-Coding-Standards für Python.
 
 **Praktischer Nachweis:**
+
 ![SAST Bandit Scan Result](images/SAST%20Bandit.jpg)
 
 ---
@@ -72,6 +73,7 @@ Ein automatisiertes Python-Skript führte massenhafte POST-Requests mit iteriert
 Nach drei fehlerhaften Versuchen wird die Quell-IP für weitere Authentifizierungsversuche blockiert. Der Penetration Test des Skripts scheiterte im Re-Test; der Angriffsvektor wurde erfolgreich geschlossen.
 
 **Praktischer Nachweis:**
+
 ![Brute-Force Protection Triggered](images/Brute-Force.jpg)
 
 ---
@@ -90,6 +92,7 @@ Der Payload wurde vom Frontend-Rendering (Django Templates) nicht als ausführba
 Die Anwendung ist standardmäßig effektiv gegen grundlegende Reflected- und Stored-XSS-Angriffe geschützt (Secure Defaults). Zusätzliche manuelle Sanitization-Bibliotheken (wie Bleach) sind für Standard-Textfelder nicht zwingend erforderlich.
 
 **Praktischer Nachweis:**
+
 ![Stored XSS Blocked](images/XSS.jpg)
 
 ---
@@ -125,4 +128,5 @@ Die Analyse des abgefangenen Requests ergab, dass die Anwendung clientseitige Pr
 Die Anwendung ist **Secure by Design**. Das Backend vertraut keinen clientseitigen Eingaben bezüglich kritischer Geschäftsdaten (wie Preisen). Stattdessen wird die Artikel-ID aus der URL verwendet, um die autoritativen Preisinformationen serverseitig und manipulationssicher direkt aus der Datenbank abzufragen. Ein Price-Tampering-Angriff ist somit architektonisch unmöglich.
 
 **Praktischer Nachweis:**
+
 ![Burp Suite Parameter Tampering](images/Burp%20Suite.jpg)
