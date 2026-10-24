@@ -10,7 +10,7 @@ Ein moderner, mehrsprachiger Customer-to-Customer (C2C) Marktplatz, entwickelt m
 
 Dieses Projekt wurde als umfassendes Portfolio-Projekt entwickelt, um tiefgreifende Kenntnisse in der Backend-Entwicklung, relationalem Datenbankdesign, API-Integration und Web-Security zu demonstrieren. 
 
-**Live-Demo (Hosting):** Bereitgestellt auf PythonAnywhere Infrastructure — 👉 [Zum Projekt](https://erikkytach.pythonanywhere.com/)
+**Live-Demo (Hosting):** Bereitgestellt auf PythonAnywhere Infrastructure
 
 ## 🛠 Technologie-Stack
 
