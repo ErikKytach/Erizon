@@ -1,9 +1,9 @@
 # Security Audit & Hardening Report: Erizon E-Commerce Platform
 
-* **Autor:** Erik Kytach
-* **Projekt:** Erizon (Full-Stack Django E-Commerce)
-* **Ziel:** Überprüfung der Anwendung auf Schwachstellen nach OWASP Top 10 und Implementierung von Hardening-Maßnahmen für den Produktivbetrieb.
-* **Umgebung:** Isolierte Staging-Umgebung / Code-Analyse (White-Box).
+- **Autor:** Erik Kytach
+- **Projekt:** Erizon (Full-Stack Django E-Commerce)
+- **Ziel:** Überprüfung der Anwendung auf Schwachstellen nach OWASP Top 10 und Implementierung von Hardening-Maßnahmen für den Produktivbetrieb.
+- **Umgebung:** Isolierte Staging-Umgebung / Code-Analyse (White-Box).
 
 ---
 
@@ -27,13 +27,16 @@ Die Produktionskonfiguration der Anwendung wurde durch den Befehl `manage.py che
 Zur proaktiven Identifizierung potenzieller Sicherheitslücken im Python-Quellcode wurde das branchenübliche SAST-Tool **Bandit** eingesetzt. Die automatisierte Prüfung umfasste die gesamte Backend-Codebasis (1965 Lines of Code), exklusive der virtuellen Umgebung.
 
 **Prüfkriterien:**
-* Identifikation von Hardcoded Secrets und Credentials im Quelltext.
-* Erkennung von Command Injection und unsicherer Deserialisierung.
-* Überprüfung auf direkte SQL-Injection-Vektoren außerhalb des Django ORM.
+- Identifikation von Hardcoded Secrets und Credentials im Quelltext.
+- Erkennung von Command Injection und unsicherer Deserialisierung.
+- Überprüfung auf direkte SQL-Injection-Vektoren außerhalb des Django ORM.
 
 **Ergebnis:**
-* **Befund:** `No issues identified.` Es wurden 0 kritische (High), 0 mittlere (Medium) und 0 geringe (Low) Schwachstellen gefunden.
-* **Fazit:** Die Kernlogik der Django-Anwendung entspricht den gängigen Secure-Coding-Standards für Python.
+- **Befund:** `No issues identified.` Es wurden 0 kritische (High), 0 mittlere (Medium) und 0 geringe (Low) Schwachstellen gefunden.
+- **Fazit:** Die Kernlogik der Django-Anwendung entspricht den gängigen Secure-Coding-Standards für Python.
+
+**Praktischer Nachweis:**
+![SAST Bandit Scan Result](images/SAST%20Bandit.jpg)
 
 ---
 
@@ -45,8 +48,8 @@ Um die Robustheit der Geschäftslogik zu validieren, wurde ein manueller Penetra
 Es wurde geprüft, ob ein authentifizierter Benutzer (`hacker`) durch Manipulation von URL-Parametern (z.B. `/edit_product/337/`) auf die Ressourcen eines anderen Benutzers (`victim`) zugreifen oder diese verändern kann.
 
 **Ergebnis der Prüfung:**
-* **Warenkorb & Bestellhistorie:** Die Endpunkte (`/info_cart/`, `/all_orders/`) verzichten vollständig auf ID-Parameter in der URL und nutzen stattdessen serverseitiges Session-Management (`request.user`), wodurch IDOR-Angriffe architektonisch ausgeschlossen sind.
-* **Produktverwaltung:** Der direkte Aufruf einer fremden Produkt-ID (`/edit_product/<id>/`) durch einen unberechtigten Benutzer wurde vom Backend erfolgreich abgefangen. Die Autorisierungsprüfung im View greift korrekt, verweigert den Zugriff und leitet den Angreifer auf das eigene Dashboard um.
+- **Warenkorb & Bestellhistorie:** Die Endpunkte (`/info_cart/`, `/all_orders/`) verzichten vollständig auf ID-Parameter in der URL und nutzen stattdessen serverseitiges Session-Management (`request.user`), wodurch IDOR-Angriffe architektonisch ausgeschlossen sind.
+- **Produktverwaltung:** Der direkte Aufruf einer fremden Produkt-ID (`/edit_product/<id>/`) durch einen unberechtigten Benutzer wurde vom Backend erfolgreich abgefangen. Die Autorisierungsprüfung im View greift korrekt, verweigert den Zugriff und leitet den Angreifer auf das eigene Dashboard um.
 
 **Fazit:**
 Die Access-Control-Mechanismen sind sicher implementiert (Security by Design). Es konnten keine Privilegien-Eskalationen oder unautorisierten Datenzugriffe festgestellt werden.
@@ -61,12 +64,15 @@ Zur Absicherung der Authentifizierungsschnittstellen gegen automatisierte Creden
 Ein automatisiertes Python-Skript führte massenhafte POST-Requests mit iterierten Passwörtern gegen den Endpunkt `/de/login/` aus. Ohne Schutzmechanismen konnten unbegrenzt Anmeldeversuche durchgeführt werden.
 
 **Durchgeführte Maßnahme:**
-* Integration der Bibliothek `django-axes` zur Überwachung von Login-Versuchen auf Middleware-Ebene.
-* Konfiguration eines strikten Lockouts (`AXES_FAILURE_LIMIT = 3`).
-* Die Blockierung erfolgt dynamisch (`AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]`), um sowohl Account-Targeting als auch IP-basierte Angriffe zu unterbinden.
+- Integration der Bibliothek `django-axes` zur Überwachung von Login-Versuchen auf Middleware-Ebene.
+- Konfiguration eines strikten Lockouts (`AXES_FAILURE_LIMIT = 3`).
+- Die Blockierung erfolgt dynamisch (`AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]`), um sowohl Account-Targeting als auch IP-basierte Angriffe zu unterbinden.
 
 **Ergebnis nach Remediation:**
 Nach drei fehlerhaften Versuchen wird die Quell-IP für weitere Authentifizierungsversuche blockiert. Der Penetration Test des Skripts scheiterte im Re-Test; der Angriffsvektor wurde erfolgreich geschlossen.
+
+**Praktischer Nachweis:**
+![Brute-Force Protection Triggered](images/Brute-Force.jpg)
 
 ---
 
@@ -83,6 +89,9 @@ Der Payload wurde vom Frontend-Rendering (Django Templates) nicht als ausführba
 **Fazit:**
 Die Anwendung ist standardmäßig effektiv gegen grundlegende Reflected- und Stored-XSS-Angriffe geschützt (Secure Defaults). Zusätzliche manuelle Sanitization-Bibliotheken (wie Bleach) sind für Standard-Textfelder nicht zwingend erforderlich.
 
+**Praktischer Nachweis:**
+![Stored XSS Blocked](images/XSS.jpg)
+
 ---
 
 ## 6. Secret Management & API Security (CWE-798: Use of Hard-coded Credentials)
@@ -93,9 +102,9 @@ Im Rahmen der Code-Überprüfung wurde der Umgang mit externen Dienstleistern un
 Ein sensibler API-Schlüssel für den DeepL-Übersetzungsdienst (`DEEPL_API_KEY`) befand sich direkt im Quellcode (`main/translate_product.py`). Dies stellte ein Risiko für ein versehentliches Credential Leakage über das Versionskontrollsystem (GitHub) dar.
 
 **Durchgeführte Maßnahme:**
-* Der API-Schlüssel wurde vollständig aus der Codebasis entfernt.
-* Die Speicherung erfolgt isoliert in den Umgebungsvariablen (`.env`), welche durch die `.gitignore` strikt von der Versionskontrolle ausgeschlossen sind.
-* Der Applikationscode wurde refaktorisiert, um den Schlüssel zur Laufzeit sicher über `os.environ.get('DEEPL_API_KEY')` abzurufen.
+- Der API-Schlüssel wurde vollständig aus der Codebasis entfernt.
+- Die Speicherung erfolgt isoliert in den Umgebungsvariablen (`.env`), welche durch die `.gitignore` strikt von der Versionskontrolle ausgeschlossen sind.
+- Der Applikationscode wurde refaktorisiert, um den Schlüssel zur Laufzeit sicher über `os.environ.get('DEEPL_API_KEY')` abzurufen.
 
 **Fazit:**
 Die Anwendung folgt dem Prinzip der Trennung von Code und Konfiguration. Hardcoded Secrets sind architektonisch ausgeschlossen und die Integration von Drittanbieter-APIs erfolgt nach aktuellen Sicherheitsstandards.
@@ -114,3 +123,6 @@ Die Analyse des abgefangenen Requests ergab, dass die Anwendung clientseitige Pr
 
 **Fazit:**
 Die Anwendung ist **Secure by Design**. Das Backend vertraut keinen clientseitigen Eingaben bezüglich kritischer Geschäftsdaten (wie Preisen). Stattdessen wird die Artikel-ID aus der URL verwendet, um die autoritativen Preisinformationen serverseitig und manipulationssicher direkt aus der Datenbank abzufragen. Ein Price-Tampering-Angriff ist somit architektonisch unmöglich.
+
+**Praktischer Nachweis:**
+![Burp Suite Parameter Tampering](images/Burp%20Suite.jpg)
