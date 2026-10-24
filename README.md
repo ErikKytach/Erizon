@@ -2,11 +2,11 @@
 
 Ein moderner, mehrsprachiger Customer-to-Customer (C2C) Marktplatz, entwickelt mit Python und dem Django-Framework. Erizon kombiniert die Kernfunktionen klassischer E-Commerce-Shops (wie Amazon) mit der Flexibilität von Kleinanzeigen-Plattformen (wie eBay Kleinanzeigen). Nutzer können sowohl eigene Artikel verkaufen als auch Produkte anderer Nutzer kaufen.
 
-## 🚀 Projektübersicht
+##   Projektübersicht
 
 Dieses Projekt wurde als umfassendes Portfolio-Projekt entwickelt, um tiefgreifende Kenntnisse in der Backend-Entwicklung, relationalem Datenbankdesign, API-Integration und Web-Security zu demonstrieren. 
 
-**Live-Demo (Hosting):** Bereitgestellt auf PythonAnywhere / Oracle Cloud Infrastructure.
+**Live-Demo (Hosting):** Bereitgestellt auf PythonAnywhere Infrastructure.
 
 ## 🛠 Technologie-Stack
 
@@ -16,7 +16,7 @@ Dieses Projekt wurde als umfassendes Portfolio-Projekt entwickelt, um tiefgreife
 * **APIs & externe Services:** DeepL API (für dynamische Mehrsprachigkeit)
 * **Sicherheit:** `django-axes` (Brute-Force Protection), integrierte Django-Security-Middleware (CSRF, XSS-Schutz). *Details siehe [SECURITY_AUDIT.md](./SECURITY_AUDIT.md)*.
 
-## ✨ Hauptfunktionen (Features)
+##   Hauptfunktionen (Features)
 
 1. **Hybrides C2C-Modell:** Jeder registrierte Nutzer hat Zugriff auf ein eigenes Dashboard (`/my_products/`), um Angebote zu erstellen, zu bearbeiten und zu löschen. Gleichzeitig können Produkte anderer Nutzer in den Warenkorb gelegt werden.
 2. **Automatisierte Mehrsprachigkeit (DeepL Integration):** Bei der Erstellung oder Bearbeitung eines Produkts werden Titel und Beschreibung über die DeepL-API im Hintergrund (`translate_via_deepl`) automatisch auf Englisch, Deutsch und Ukrainisch übersetzt und in der Datenbank persistiert. Die Suche (Search-Engine) berücksichtigt alle übersetzten Sprachen.
@@ -24,7 +24,7 @@ Dieses Projekt wurde als umfassendes Portfolio-Projekt entwickelt, um tiefgreife
 4. **Intelligentes Warenkorb- & Checkout-System:** Serverseitiges Session-Management für den Warenkorb. Das Backend prüft bei jedem Schritt den Lagerbestand (Stock Validation). Eigene Produkte können nicht in den eigenen Warenkorb gelegt werden.
 5. **Schutz vor View-Manipulation (Anti-Spam):** Produktaufrufe (`ProductView`) werden basierend auf der IP-Adresse (`get_client_ip`) und einem 5-Minuten-Zeitfenster geloggt, um künstlich aufgeblähte Aufrufzahlen zu verhindern.
 
-## 🗄 Datenbank-Architektur (Data Models)
+##   Datenbank-Architektur (Data Models)
 
 Das relationale Datenbankschema ist strikt normalisiert und umfasst unter anderem folgende Kernmodelle:
 
