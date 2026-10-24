@@ -7,28 +7,31 @@ from django.contrib import messages
 def registration_func(request):
     if request.user.is_authenticated:
         return redirect("/")
+
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
-        print(form.data)
-        print(request.POST)
+
         if form.is_valid() and "admin" not in form.cleaned_data["username"].lower():
             user = form.save()
-            print()
-            login(request, user)
+
+            # Добавлен аргумент backend
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+
             request.session["user_id"] = user.id
             from main.views import create_cart_func
             create_cart_func(request)
             return redirect('/all_products/')
-        else:
-            return redirect("/registration/")
+        # Убрано: else: return redirect("/registration/")
+        # (Читайте совет ниже)
 
-    form = UserRegistrationForm()
+    else:
+        form = UserRegistrationForm()
 
     slovnik = {
         "form": form
     }
 
-    return render(request, "registration.html", context = slovnik)
+    return render(request, "registration.html", context=slovnik)
 
 def login_func(request):
     if request.user.is_authenticated:
